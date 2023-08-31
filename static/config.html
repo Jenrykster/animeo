@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animeo</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      height: 100vh;
+      background-color: black;
+      color: white
+    }
+
+    main {
+      background-color: rgba(142, 142, 142, 0.189);
+      margin: 0 auto;
+      padding: 0 5rem;
+      display: flex;
+      height: 100%;
+      align-items: center;
+      flex-direction: column;
+      max-width: 600px;
+    }
+
+    .button {
+      background-color: #7b5bf5;
+      width: 7.5rem;
+      text-align: center;
+      padding: 0.75rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .disabled {
+      opacity: 0.2 !important;
+    }
+
+    #login-button {
+      background-color: #47b8f3;
+    }
+
+    #success-message {
+      display: none;
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <main>
+    <h1>Animeo</h1>
+    <a id="login-button" class="button"
+      href="https://anilist.co/api/v2/oauth/authorize?client_id=14276&response_type=token">ANILIST
+      LOGIN</a>
+    <h3 id="success-message">Logged in successfully ✅</h3>
+    <p>You need to login to use this addon.</p>
+    <a id="install-button" class="button disabled">INSTALL</a>
+    <p>After logging in just click on the "INSTALL" button.</p>
+    <p>
+      <b>PS:</b> If it doesn't work just copy its link to your stremio
+      search field.
+    </p>
+  </main>
+
+  <script>
+    const token = window.location.hash.match(/access_token=(.+?)&/)[1]
+    const domain = window.location.host
+
+
+    const installButton = document.querySelector('#install-button')
+    const loginButton = document.querySelector('#login-button')
+    const successMessage = document.querySelector('#success-message')
+    if (token) {
+      installButton.classList.remove('disabled')
+
+      let config = encodeURIComponent(JSON.stringify({ token }))
+      console.log(config)
+      installButton.href = `stremio://${domain}/${config}/manifest.json`
+
+      loginButton.style.display = 'none'
+      successMessage.style.display = 'initial'
+    }
+  </script>
+</body>
+
+</html>
