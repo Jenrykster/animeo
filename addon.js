@@ -1,6 +1,8 @@
-const Kitsu = require("kitsu");
 const Anilist = require("anilist-node");
 const { addonBuilder } = require("stremio-addon-sdk");
+const { getNameFromKitsuId } = require("./lib/kitsu");
+const { getNameFromCinemetaId } = require("./lib/cinemeta");
+const { setUserToken, handleWatchedEpisode } = require("./lib/anilist");
 
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 const builder = new addonBuilder({
@@ -24,52 +26,31 @@ const builder = new addonBuilder({
   ],
 });
 
-const kitsuApi = new Kitsu();
-let anilistApi = null;
-
 builder.defineSubtitlesHandler(async (args) => {
   console.log(args.id);
-  if (args.config.token && !anilistApi) {
-    anilistApi = new Anilist(args.config.token);
-  }
+  setUserToken(args.config.token);
+
+  let animeName = "";
+  let episode = 0;
 
   if (args.id.startsWith("kitsu")) {
-    const [_, id, episode] = args.id.split(":");
-
-    const kitsuEntry = await kitsuApi.fetch(`anime/${id}`);
-
-    if (kitsuEntry) {
-      await handleWatchedEpisode(kitsuEntry.data.canonicalTitle, episode);
-    }
+    const [_, id, currEp] = args.id.split(":");
+    animeName = await getNameFromKitsuId(id);
+    episode = currEp;
+  } else {
+    const [id, _, currEp] = args.id.split(":");
+    animeName = await getNameFromCinemetaId(id, args.type);
+    episode = args.type === "movie" ? 1 : currEp;
   }
-
-  return Promise.resolve({ subtitles: [] });
-});
-
-async function handleWatchedEpisode(animeName, currentEpisode) {
-  const anilistEntry = await getAnilistEntry(animeName);
-  if (anilistEntry) {
-    await updateAnilist(anilistEntry.id, currentEpisode);
-  }
-}
-
-async function getAnilistEntry(name) {
-  const response = await anilistApi.searchEntry.anime(name, null, 1, 1);
-  const results = response.media;
-  if (Array.isArray(results) && results.length > 0) {
-    return results[0];
-  }
-}
-
-async function updateAnilist(id, currentEpisode) {
-  const hasUpdatedSuccessfully = await anilistApi.lists.addEntry(id, {
-    progress: parseInt(currentEpisode),
-    status: "CURRENT",
-  });
 
   console.log({
-    hasUpdatedSuccessfully,
+    animeName,
+    episode,
   });
-}
+  if (animeName && episode) {
+    await handleWatchedEpisode(animeName, parseInt(episode));
+  }
+  return Promise.resolve({ subtitles: [] });
+});
 
 module.exports = builder.getInterface();

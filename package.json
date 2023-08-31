@@ -7,6 +7,7 @@
 	},
 	"dependencies": {
 		"anilist-node": "^1.14.0",
+		"axios": "^1.5.0",
 		"kitsu": "^10.1.2",
 		"stremio-addon-sdk": "^1.6.10"
 	}
