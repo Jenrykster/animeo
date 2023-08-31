@@ -12,7 +12,7 @@ const builder = new addonBuilder({
   resources: ["subtitles"],
   types: ["movie", "series"],
   idPrefixes: ["tt", "kitsu"],
-  name: "Animeo",
+  name: "animeo",
   description: "Track your anime progress with anilist while using stremio.",
   behaviorHints: {
     configurable: true,
