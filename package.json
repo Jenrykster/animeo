@@ -1,0 +1,13 @@
+{
+	"name": "stremio-addon-anistremio",
+	"version": "0.0.1",
+	"description": "Track your anime progress with anilist while using stremio.",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"anilist-node": "^1.14.0",
+		"kitsu": "^10.1.2",
+		"stremio-addon-sdk": "^1.6.10"
+	}
+}
