@@ -38,8 +38,13 @@ builder.defineSubtitlesHandler(async (args) => {
     animeName = await getNameFromKitsuId(id);
     episode = currEp;
   } else {
-    const [id, _, currEp] = args.id.split(":");
+    let [id, season, currEp] = args.id.split(":");
+    season = parseInt(season);
+
     animeName = await getNameFromCinemetaId(id, args.type);
+    if (season > 1) {
+      animeName += ` ${season}`;
+    }
     episode = args.type === "movie" ? 1 : currEp;
   }
 
