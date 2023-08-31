@@ -1,0 +1,17 @@
+diff --git a/node_modules/stremio-addon-sdk/src/serveHTTP.js b/node_modules/stremio-addon-sdk/src/serveHTTP.js
+index db94ae3..8ffa068 100644
+--- a/node_modules/stremio-addon-sdk/src/serveHTTP.js
++++ b/node_modules/stremio-addon-sdk/src/serveHTTP.js
+@@ -46,7 +46,11 @@ function serveHTTP(addonInterface, opts = {}) {
+ 	if (hasConfig)
+ 		app.get('/configure', (_, res) => {
+ 			res.setHeader('content-type', 'text/html')
+-			res.end(landingHTML)
++			if(opts.customConfigPage){
++				res.sendFile(opts.customConfigPage)
++			}else{
++				res.end(landingHTML)
++			}
+ 		})
+ 
+ 	const server = app.listen(opts.port)
