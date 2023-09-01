@@ -2,7 +2,7 @@
 This is a stremio addon that uses the Anilist API to track your anime series/movies progress.
 
 ### How to use it
-Go to the addon configuration URL, click on the **ANILIST LOGIN** button, follow the remaining instructions on the page.
+Go to the [addon configuration URL](https://7a625ac658ec-animeo.baby-beamup.club/configure), click on the **ANILIST LOGIN** button, follow the remaining instructions on the page.
 
 Then just watch any anime through stremio Cinemeta's/Kitsu's catalog. I **strongly** recommend you use Kitsu though, since there's a bigger chance of the addon finding the anilist equivalent entry. 
 
