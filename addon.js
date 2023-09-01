@@ -9,6 +9,7 @@ const builder = new addonBuilder({
   id: "com.jenryk.animeo",
   version: "0.0.1",
   catalogs: [],
+  logo: "https://i.imgur.com/tLsz4at.png",
   resources: ["subtitles"],
   types: ["movie", "series"],
   idPrefixes: ["tt", "kitsu"],
@@ -16,6 +17,7 @@ const builder = new addonBuilder({
   description: "Track your anime progress with anilist while using stremio.",
   behaviorHints: {
     configurable: true,
+    configurationRequired: true,
   },
   config: [
     {
