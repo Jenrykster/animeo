@@ -85,6 +85,9 @@ builder.defineSubtitlesHandler(async (args) => {
 
 builder.defineCatalogHandler(async (args) => {
   setUserToken(args.config.token);
+  console.log({
+    args,
+  });
   let metas = [];
   const anilistListType = CATALOGS.find((catalog) => catalog.id === args.id);
   if (anilistListType) {
