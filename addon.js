@@ -88,7 +88,11 @@ builder.defineCatalogHandler(async (args) => {
   let metas = [];
   const anilistListType = CATALOGS.find((catalog) => catalog.id === args.id);
   if (anilistListType) {
-    metas = await getCatalog(anilistListType.id);
+    try {
+      metas = await getCatalog(anilistListType.id);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return {
