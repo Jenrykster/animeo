@@ -80,7 +80,6 @@
       installButton.classList.remove('disabled')
 
       let config = encodeURIComponent(JSON.stringify({ token }))
-      console.log(config)
       installButton.href = `stremio://${domain}/${config}/manifest.json`
 
       loginButton.style.display = 'none'
