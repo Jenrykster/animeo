@@ -26,3 +26,8 @@ To host the addon on your own machine you'll need to:
 4. Run `npm start -- --install`.
 
 Feel free to open an issue if there is any doubt or problem.
+
+### Support
+If you like what I do consider buying me a coffee ;)
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/jenryk)
