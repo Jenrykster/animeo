@@ -57,42 +57,38 @@ const builder = new addonBuilder({
 });
 
 builder.defineSubtitlesHandler(async (args) => {
-  setUserToken(args.config.token);
-
+  const { token } = args.config;
   let animeName = "";
-  let episode = 0;
+  let episode = "0";
 
   if (args.id.startsWith("kitsu")) {
     const [_, id, currEp] = args.id.split(":");
     animeName = await getNameFromKitsuId(id);
     episode = currEp;
   } else {
-    let [id, season, currEp] = args.id.split(":");
-    season = parseInt(season);
+    let [id, seasonName, currEp] = args.id.split(":");
+    const season = parseInt(seasonName);
 
     animeName = await getNameFromCinemetaId(id, args.type);
     if (season > 1) {
       animeName += ` ${season}`;
     }
-    episode = args.type === "movie" ? 1 : currEp;
+    episode = args.type === "movie" ? "1" : currEp;
   }
 
   if (animeName && episode) {
-    await handleWatchedEpisode(animeName, parseInt(episode));
+    await handleWatchedEpisode(animeName, parseInt(episode), token);
   }
   return Promise.resolve({ subtitles: [] });
 });
 
 builder.defineCatalogHandler(async (args) => {
-  setUserToken(args.config.token);
-  console.log({
-    args,
-  });
+  const { token } = args.config;
   let metas = [];
   const anilistListType = CATALOGS.find((catalog) => catalog.id === args.id);
   if (anilistListType) {
     try {
-      metas = await getCatalog(anilistListType.id);
+      metas = await getCatalog(anilistListType.id, token);
     } catch (err) {
       console.error(err);
     }
