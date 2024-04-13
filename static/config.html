@@ -62,6 +62,10 @@
       margin: 0.5rem;
       text-align: center;
     }
+
+    #helper {
+      display: none;
+    }
   </style>
 
 
@@ -88,8 +92,8 @@
     <p>You need to login to use this addon.</p>
     <a id="install-button" class="button disabled">INSTALL</a>
     <p>After logging in just click on the "INSTALL" button.</p>
-    <p>
-      <b>PS:</b> If it doesn't work just copy its link to your stremio
+    <p id="helper">
+      <b>PS:</b> If it doesn't work just copy <a href="#">this</a> link into your stremio
       search field.
     </p>
   </main>
@@ -102,16 +106,28 @@
     const loginButton = document.querySelector('#login-button')
     const successMessage = document.querySelector('#success-message')
     const optionsContainer = document.querySelector('#options')
+    const helperText = document.querySelector('#helper')
 
-    installButton.addEventListener('click', () => {
+    function getInstallURL() {
       const kitsuOnly = optionsContainer.querySelector('#kitsu-only').checked
       const preAddedOnly = optionsContainer.querySelector('#pre-added-only').checked
 
       const configString = JSON.stringify({ token, kitsuOnly, preAddedOnly })
       const config = encodeURIComponent(configString)
 
-      const url = `stremio://${domain}/${config}/manifest.json`
+      return `stremio://${domain}/${config}/manifest.json`
+    }
 
+    optionsContainer.querySelectorAll('input').forEach(
+      input => input.addEventListener('change', () => {
+        helperText.querySelector('a').href = getInstallURL()
+      })
+    )
+
+    installButton.addEventListener('click', () => {
+      const url = getInstallURL()
+
+      helperText.querySelector('a').href = url;
       window.open(url, '_blank').focus();
     })
 
@@ -119,6 +135,9 @@
       installButton.classList.remove('disabled')
       loginButton.style.display = 'none'
       successMessage.style.display = 'initial'
+
+      helperText.style.display = 'initial';
+      helperText.querySelector('a').href = getInstallURL()
     }
   </script>
 </body>

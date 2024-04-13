@@ -57,8 +57,7 @@ const builder = new addonBuilder({
 });
 
 builder.defineSubtitlesHandler(async (args) => {
-  console.log({ config: args.config });
-  const { token, kitsuOnly } = args.config;
+  const { token, kitsuOnly, preAddedOnly } = args.config;
   let animeName = "";
   let episode = "0";
 
@@ -78,7 +77,12 @@ builder.defineSubtitlesHandler(async (args) => {
   }
 
   if (animeName && episode) {
-    await handleWatchedEpisode(animeName, parseInt(episode), token);
+    await handleWatchedEpisode(
+      animeName,
+      parseInt(episode),
+      preAddedOnly,
+      token
+    );
   }
   return Promise.resolve({ subtitles: [] });
 });
