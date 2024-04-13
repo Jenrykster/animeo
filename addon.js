@@ -70,7 +70,7 @@ builder.defineSubtitlesHandler(async (args) => {
     const season = parseInt(seasonName);
 
     animeName = await getNameFromCinemetaId(id, args.type);
-    if (season > 1) {
+    if (animeName && season > 1) {
       animeName += ` ${season}`;
     }
     episode = args.type === "movie" ? "1" : currEp;
