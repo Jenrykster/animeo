@@ -47,6 +47,21 @@
     #success-message {
       display: none;
     }
+
+    #options {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      gap: 0.25rem;
+      border: 1px solid white;
+      margin: 20px;
+      max-width: 500px;
+    }
+
+    #options h5 {
+      margin: 0.5rem;
+      text-align: center;
+    }
   </style>
 
 
@@ -59,6 +74,17 @@
       href="https://anilist.co/api/v2/oauth/authorize?client_id=14276&response_type=token">ANILIST
       LOGIN</a>
     <h3 id="success-message">Logged in successfully ✅</h3>
+    <div id="options">
+      <h5>Options</h5>
+      <div>
+        <input type="checkbox" id="kitsu-only" name="kitsu-only" />
+        <label for="kitsu-only">Kitsu entries only</label>
+      </div>
+      <div>
+        <input type="checkbox" id="pre-added-only" name="pred-added" />
+        <label for="pre-added" id="pre-added-only">Only update animes already on my list</label>
+      </div>
+    </div>
     <p>You need to login to use this addon.</p>
     <a id="install-button" class="button disabled">INSTALL</a>
     <p>After logging in just click on the "INSTALL" button.</p>
@@ -72,16 +98,25 @@
     const token = window.location.hash.match(/access_token=(.+?)&/)[1]
     const domain = window.location.host
 
-
     const installButton = document.querySelector('#install-button')
     const loginButton = document.querySelector('#login-button')
     const successMessage = document.querySelector('#success-message')
+    const optionsContainer = document.querySelector('#options')
+
+    installButton.addEventListener('click', () => {
+      const kitsuOnly = optionsContainer.querySelector('#kitsu-only').checked
+      const preAddedOnly = optionsContainer.querySelector('#pre-added-only').checked
+
+      const configString = JSON.stringify({ token, kitsuOnly, preAddedOnly })
+      const config = encodeURIComponent(configString)
+
+      const url = `stremio://${domain}/${config}/manifest.json`
+
+      window.open(url, '_blank').focus();
+    })
+
     if (token) {
       installButton.classList.remove('disabled')
-
-      let config = encodeURIComponent(JSON.stringify({ token }))
-      installButton.href = `stremio://${domain}/${config}/manifest.json`
-
       loginButton.style.display = 'none'
       successMessage.style.display = 'initial'
     }

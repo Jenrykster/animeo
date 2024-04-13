@@ -57,7 +57,8 @@ const builder = new addonBuilder({
 });
 
 builder.defineSubtitlesHandler(async (args) => {
-  const { token } = args.config;
+  console.log({ config: args.config });
+  const { token, kitsuOnly } = args.config;
   let animeName = "";
   let episode = "0";
 
@@ -65,7 +66,7 @@ builder.defineSubtitlesHandler(async (args) => {
     const [_, id, currEp] = args.id.split(":");
     animeName = await getNameFromKitsuId(id);
     episode = currEp;
-  } else {
+  } else if (!kitsuOnly) {
     let [id, seasonName, currEp] = args.id.split(":");
     const season = parseInt(seasonName);
 
