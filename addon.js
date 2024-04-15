@@ -2,7 +2,7 @@ const { addonBuilder } = require("stremio-addon-sdk");
 const { getNameFromKitsuId } = require("./lib/kitsu");
 const { getNameFromCinemetaId } = require("./lib/cinemeta");
 const { getCatalog } = require("./lib/anilist");
-const { setUserToken, handleWatchedEpisode } = require("./lib/anilist");
+const { handleWatchedEpisode } = require("./lib/anilist");
 
 const CATALOGS = [
   {
@@ -77,12 +77,16 @@ builder.defineSubtitlesHandler(async (args) => {
   }
 
   if (animeName && episode) {
-    await handleWatchedEpisode(
-      animeName,
-      parseInt(episode),
-      preAddedOnly,
-      token
-    );
+    try {
+      await handleWatchedEpisode(
+        animeName,
+        parseInt(episode),
+        preAddedOnly,
+        token
+      );
+    } catch (err) {
+      console.error(err);
+    }
   }
   return Promise.resolve({ subtitles: [] });
 });

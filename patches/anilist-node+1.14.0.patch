@@ -1,3 +1,18 @@
+diff --git a/node_modules/anilist-node/lib/fetcher.js b/node_modules/anilist-node/lib/fetcher.js
+index 5c5813c..d3eee37 100644
+--- a/node_modules/anilist-node/lib/fetcher.js
++++ b/node_modules/anilist-node/lib/fetcher.js
+@@ -156,7 +156,9 @@ module.exports = {
+ 			}
+ 			throw new Error(`ERROR: AniList API returned with a ${response.status} error code.`);
+ 		}
+-
++		console.log('REMAINING REQUESTS FOR USER ', this.key.slice(100, 110), ' IS ', 
++			response?.headers?.get('x-ratelimit-remaining')
++		)
+ 		const json = await response.json();
+ 
+ 		if (Object.keys(json).length < 0) {
 diff --git a/node_modules/anilist-node/lib/lists.js b/node_modules/anilist-node/lib/lists.js
 index fdbcef0..50fed23 100644
 --- a/node_modules/anilist-node/lib/lists.js
