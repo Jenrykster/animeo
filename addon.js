@@ -1,5 +1,5 @@
 const { addonBuilder } = require("stremio-addon-sdk");
-const { getNameFromKitsuId } = require("./lib/kitsu");
+const { getAnilistIdFromKitsuId } = require("./lib/kitsu");
 const { getNameFromCinemetaId } = require("./lib/cinemeta");
 const { getCatalog } = require("./lib/anilist");
 const { handleWatchedEpisode } = require("./lib/anilist");
@@ -58,13 +58,14 @@ const builder = new addonBuilder({
 
 builder.defineSubtitlesHandler(async (args) => {
   const { token, kitsuOnly, preAddedOnly } = args.config;
+  let anilistId = "0";
   let animeName = "";
   let episode = "0";
 
   if (args.id.startsWith("kitsu")) {
     const [_, id, currEp] = args.id.split(":");
-    animeName = await getNameFromKitsuId(id);
-    episode = currEp;
+    anilistId = await getAnilistIdFromKitsuId(id, "kitsu");
+    episode = args.type === "movie" ? "1" : currEp;
   } else if (!kitsuOnly) {
     let [id, seasonName, currEp] = args.id.split(":");
     const season = parseInt(seasonName);
@@ -76,10 +77,10 @@ builder.defineSubtitlesHandler(async (args) => {
     episode = args.type === "movie" ? "1" : currEp;
   }
 
-  if (animeName && episode) {
+  if ((animeName || anilistId) && episode) {
     try {
       await handleWatchedEpisode(
-        animeName,
+        animeName || parseInt(anilistId),
         parseInt(episode),
         preAddedOnly,
         token
