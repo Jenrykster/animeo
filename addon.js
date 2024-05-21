@@ -80,7 +80,8 @@ builder.defineSubtitlesHandler(async (args) => {
   if ((animeName || anilistId) && episode) {
     try {
       await handleWatchedEpisode(
-        animeName || parseInt(anilistId),
+        animeName,
+        parseInt(anilistId),
         parseInt(episode),
         preAddedOnly,
         token
