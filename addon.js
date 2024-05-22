@@ -1,7 +1,7 @@
 const { addonBuilder } = require("stremio-addon-sdk");
-const { getAnilistIdFromKitsuId } = require("./lib/kitsu");
 const { getNameFromCinemetaId } = require("./lib/cinemeta");
 const { getCatalog } = require("./lib/anilist");
+const { getAnilistId } = require("./lib/anilist");
 const { handleWatchedEpisode } = require("./lib/anilist");
 
 const CATALOGS = [
@@ -64,7 +64,7 @@ builder.defineSubtitlesHandler(async (args) => {
 
   if (args.id.startsWith("kitsu")) {
     const [_, id, currEp] = args.id.split(":");
-    anilistId = await getAnilistIdFromKitsuId(id, "kitsu");
+    anilistId = await getAnilistId(id, "kitsu");
     episode = args.type === "movie" ? "1" : currEp;
   } else if (!kitsuOnly) {
     let [id, seasonName, currEp] = args.id.split(":");
