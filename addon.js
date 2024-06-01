@@ -35,7 +35,7 @@ const CATALOGS = [
 // Docs: https://github.com/Stremio/stremio-addon-sdk/blob/master/docs/api/responses/manifest.md
 const builder = new addonBuilder({
   id: "com.jenryk.animeo",
-  version: "0.0.3",
+  version: "0.0.4",
   catalogs: CATALOGS,
   logo: "https://raw.githubusercontent.com/Jenrykster/animeo/main/logo.png",
   resources: ["subtitles"],
