@@ -37,7 +37,7 @@ const builder = new addonBuilder({
   id: "com.jenryk.animeo",
   version: "0.0.3",
   catalogs: CATALOGS,
-  logo: "https://i.imgur.com/tLsz4at.png",
+  logo: "https://raw.githubusercontent.com/Jenrykster/animeo/main/logo.png",
   resources: ["subtitles"],
   types: ["movie", "series"],
   idPrefixes: ["anilist", "tt", "kitsu"],
