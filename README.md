@@ -12,7 +12,7 @@ Up to this edit there's no simple way (that i know) of detecting when an user fi
 What I'm doing instead is using the `defineSubtitlesHandler` function to send a request with the current episode to the Anilist API. So, whenever you open a new episode the addon will try to update your lists.
 
 ### Limitations
-* No Anilist catalog, which means the addon is trying to find the Anilist entry through the name provided by other meta providers. I *do* plan to implement the catalogs *eventually*.
+* No Anilist catalog, which means the addon is trying to find the Anilist entry through the name provided by other meta providers (or converting the ID when coming from kitsu). I *do* plan to implement the catalogs *eventually*.
 
 * Right now I'm supporting the Kitsu and Cinemeta catalogs, Kitsu has been working well but due to the way Cinemeta handle anime parts and seasons it'll probably get some entries wrong.
 
