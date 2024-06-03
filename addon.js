@@ -68,13 +68,17 @@ builder.defineSubtitlesHandler(async (args) => {
     episode = args.type === "movie" ? "1" : currEp;
   } else if (!kitsuOnly) {
     let [id, seasonName, currEp] = args.id.split(":");
-    const season = parseInt(seasonName);
-
-    animeName = await getNameFromCinemetaId(id, args.type);
-    if (animeName && season > 1) {
-      animeName += ` ${season}`;
+    if (args.type === "movie") {
+      anilistId = await getAnilistId(id, "imdb");
+      episode = "1";
+    } else {
+      const season = parseInt(seasonName);
+      animeName = await getNameFromCinemetaId(id, args.type);
+      if (animeName && season > 1) {
+        animeName += ` ${season}`;
+      }
+      episode = currEp;
     }
-    episode = args.type === "movie" ? "1" : currEp;
   }
 
   if ((animeName || anilistId) && episode) {
