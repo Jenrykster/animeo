@@ -1,7 +1,7 @@
 const { addonBuilder } = require("stremio-addon-sdk");
 const { getNameFromCinemetaId } = require("./lib/cinemeta");
 const { getCatalog } = require("./lib/anilist");
-const { getAnilistId } = require("./lib/anilist");
+const { getAnilistId } = require("./lib/id-mapping");
 const { handleWatchedEpisode } = require("./lib/anilist");
 
 const CATALOGS = [
