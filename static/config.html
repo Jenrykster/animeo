@@ -81,8 +81,8 @@
     <div id="options">
       <h5>Options</h5>
       <div>
-        <input type="checkbox" id="kitsu-only" name="kitsu-only" />
-        <label for="kitsu-only">Kitsu entries only</label>
+        <input type="checkbox" id="enable-search" name="enable-search" />
+        <label for="enable-search">Enable anime name search for Cinemeta series (NOT RECOMMENDED)</label>
       </div>
       <div>
         <input type="checkbox" id="pre-added-only" name="pred-added" />
@@ -109,10 +109,10 @@
     const helperText = document.querySelector('#helper')
 
     function getInstallURL() {
-      const kitsuOnly = optionsContainer.querySelector('#kitsu-only').checked
+      const enableSearch = optionsContainer.querySelector('#enable-search').checked
       const preAddedOnly = optionsContainer.querySelector('#pre-added-only').checked
 
-      const configString = JSON.stringify({ token, kitsuOnly, preAddedOnly })
+      const configString = JSON.stringify({ token, enableSearch, preAddedOnly })
       const config = encodeURIComponent(configString)
 
       return `stremio://${domain}/${config}/manifest.json`

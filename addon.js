@@ -57,7 +57,7 @@ const builder = new addonBuilder({
 });
 
 builder.defineSubtitlesHandler(async (args) => {
-  const { token, kitsuOnly, preAddedOnly } = args.config;
+  const { token, enableSearch, preAddedOnly } = args.config;
   let anilistId = "0";
   let animeName = "";
   let episode = "0";
@@ -66,12 +66,12 @@ builder.defineSubtitlesHandler(async (args) => {
     const [_, id, currEp] = args.id.split(":");
     anilistId = await getAnilistId(id, "kitsu");
     episode = args.type === "movie" ? "1" : currEp;
-  } else if (!kitsuOnly) {
+  } else {
     let [id, seasonName, currEp] = args.id.split(":");
     if (args.type === "movie") {
       anilistId = await getAnilistId(id, "imdb");
       episode = "1";
-    } else {
+    } else if (enableSearch) {
       const season = parseInt(seasonName);
       animeName = await getNameFromCinemetaId(id, args.type);
       if (animeName && season > 1) {
