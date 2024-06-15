@@ -10,6 +10,7 @@
 		"anilist-node": "^1.14.0",
 		"axios": "^1.5.0",
 		"patch-package": "^8.0.0",
+		"sqlite3": "^5.1.7",
 		"stremio-addon-sdk": "^1.6.10"
 	}
 }
